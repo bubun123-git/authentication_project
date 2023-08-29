@@ -1,10 +1,10 @@
-import logo from './logo.svg';
+import AuthForm from './Component/Auth/AuthForm';
 import './App.css';
 
 function App() {
   return (
-    <div className="App">
-      Authentication Project
+    <div>
+      <AuthForm />
     </div>
   );
 }
