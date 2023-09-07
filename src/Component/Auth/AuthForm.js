@@ -1,10 +1,15 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useContext } from "react";
 import './AuthForm.css'
+import AuthContext from "../../Store/Auth-context";
 
 const AuthForm = () => {
     const [isLogin, setIsLogin] = useState(true);
+    const [isLoading, setIsLoading] = useState(false)
+
     const emailInputRef = useRef();
     const passwordInputRef = useRef();
+
+    const authCtx = useContext(AuthContext)
 
     const switchAuthModeHandler = () => {
         setIsLogin((prevState) => !prevState);
@@ -15,6 +20,7 @@ const AuthForm = () => {
         const enteredEmail = emailInputRef.current.value;
         const enteredPassword = passwordInputRef.current.value;
         let url;
+        setIsLoading(true)
         if (isLogin) {
             url = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDHlk3s7ThaSrGiF9h8286Xuua4SjOVTsQ'
         } else {
@@ -31,20 +37,25 @@ const AuthForm = () => {
                 'Content-Type': 'application/json'
             }
         }).then(res => {
+            setIsLoading(false)
             if (res.ok) {
-                // Handle successful login
+                return res.json()
             } else {
                 return res.json().then(data => {
                     let errormessage = 'Authentication Failed!'
-
+                    if (data && data.error && data.error.message) {
+                        errormessage = data.error.message
+                    }
+                    
                     throw new Error(errormessage)
+
                 });
             }
         }).then(data => {
-            console.log(data);
+            authCtx.login(data.idToken);
 
         }).catch(err => {
-            alert(err)
+            alert(err.message)
         })
     }
 
@@ -60,8 +71,9 @@ const AuthForm = () => {
                     <label htmlFor="password">Your Password</label>
                     <input type='password' id="password" required ref={passwordInputRef} />
                 </div>
-                <div>
-                    <button className="auth-button">{isLogin ? 'Login' : "Create Account"}</button><br /><br />
+                <div className="auth-button">
+                    {!isLoading && <button >{isLogin ? 'Login' : "Create Account"}</button>}<br /><br />
+                    {isLoading && <p>Pending Request</p>}
                     <button type="button" onClick={switchAuthModeHandler} className="toggle-button">
                         {isLogin ? 'Create New Account' : 'Login with Existing Account'}
                     </button>
