@@ -1,6 +1,7 @@
 import { Route, NavLink } from "react-router-dom";
 import { useContext } from "react";
 import AuthContext from "../Store/Auth-context";
+
 import '../MainNavigation/MainNavigation.css'
 
 const MainNavigation = () => {
@@ -29,7 +30,7 @@ const MainNavigation = () => {
           {isLoggedIn && (
             <li className="nav-item">
               <NavLink to="/profile" className="nav-link">
-                Profile
+                Profile 
               </NavLink>
             </li>
           )}
