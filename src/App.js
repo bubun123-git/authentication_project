@@ -1,17 +1,34 @@
 import React from 'react'; // Make sure to import React
 import AuthForm from './Component/Auth/AuthForm';
 import './App.css';
-import MainNavigation from './MainNavigation/MainNavigation';
-
+import { Route } from 'react-router-dom';
+import Layout from './MainNavigation/Layout';
+import StartingPage from './Component/StartingPage/StartingPage';
+import ProfileForm from './Component/Profile/ProfileForm';
 
 
 function App() {
   return (
     <div className='App'>
-      <MainNavigation/>
-      
-      <AuthForm />
-     
+      <Layout />
+      <Route path='/' >
+        <StartingPage />
+      </Route>
+      <Route path='/auth' >
+        <AuthForm />
+      </Route>
+      <Route path='/profile' >
+        <ProfileForm />
+      </Route>
+      <Route path='*' element={<StartingPage />} />
+
+
+
+
+
+
+
+
     </div>
   );
 }
