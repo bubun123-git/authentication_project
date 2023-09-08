@@ -34,6 +34,10 @@ const ProfileForm = () => {
 
     return (
         <form onSubmit={submitHandler} className='form'>
+            <div style={{ color: 'green' }}>
+                <h1> Your User Profile</h1>
+            </div>
+
             <div>
                 <label className='label' htmlFor="'new-password">New Password</label>
                 <input className='input[type="password"]' type='password' id='new-password' minLength='7' ref={newPasswordInputRef}></input>
