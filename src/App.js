@@ -14,7 +14,7 @@ function App() {
       <Route path='/' >
         <StartingPage />
       </Route>
-      <Route path='/auth' >
+      <Route path='/login' >
         <AuthForm />
       </Route>
       <Route path='/profile' >
