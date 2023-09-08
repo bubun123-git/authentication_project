@@ -10,7 +10,10 @@ import ProfileForm from './Component/Profile/ProfileForm';
 function App() {
   return (
     <div className='App'>
+     
       <Layout />
+
+
       <Route path='/' >
         <StartingPage />
       </Route>
@@ -21,12 +24,6 @@ function App() {
         <ProfileForm />
       </Route>
       <Route path='*' element={<StartingPage />} />
-
-
-
-
-
-
 
 
     </div>
