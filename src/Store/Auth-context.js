@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const AuthContext = React.createContext({
     token: '',
@@ -10,6 +10,7 @@ const AuthContext = React.createContext({
 export const AuthContextProvider = (props) => {
     const initialToken = localStorage.getItem('token');
     const [token, setToken] = useState(initialToken);
+    const [logoutTimeout, setLogoutTimeout] = useState(null);
 
     const userIsLoggedIn = !!token;
 
@@ -22,7 +23,21 @@ export const AuthContextProvider = (props) => {
     const logOutHandler = () => {
         setToken(null);
         localStorage.removeItem('token');
+        clearTimeout(logoutTimeout)
     };
+    const setupLogoutTimer = () => {
+        const timeoutId = setTimeout(() => {
+          logOutHandler();
+        }, 3000); 
+        setLogoutTimeout(timeoutId);
+      };
+
+      useEffect (() => {
+        if(userIsLoggedIn) {
+          setupLogoutTimer()
+        }
+    } ,[userIsLoggedIn,setupLogoutTimer]);
+      
 
     const contextValue = {
         token: token,
