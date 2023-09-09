@@ -28,7 +28,7 @@ export const AuthContextProvider = (props) => {
     const setupLogoutTimer = () => {
         const timeoutId = setTimeout(() => {
           logOutHandler();
-        }, 3000); 
+        }, 10000); 
         setLogoutTimeout(timeoutId);
       };
 
